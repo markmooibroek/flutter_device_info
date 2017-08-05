@@ -64,6 +64,7 @@ class _MyAppState extends State<MyApp> {
       'version.incremental': build.version.incremental,
       'version.codename': build.version.codename,
       'version.baseOS': build.version.baseOS,
+      'secureId': build.secureId,
       'board': build.board,
       'bootloader': build.bootloader,
       'brand': build.brand,

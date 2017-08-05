@@ -4,9 +4,12 @@
 
 package io.flutter.plugins.deviceinfo;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.provider.Settings;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -18,6 +21,7 @@ import java.util.Map;
 
 /** DeviceInfoPlugin */
 public class DeviceInfoPlugin implements MethodCallHandler {
+  final Activity activity;
 
   /** Substitute for missing values. */
   private static final String[] EMPTY_STRING_LIST = new String[] {};
@@ -26,11 +30,11 @@ public class DeviceInfoPlugin implements MethodCallHandler {
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel =
         new MethodChannel(registrar.messenger(), "plugins.flutter.io/device_info");
-    channel.setMethodCallHandler(new DeviceInfoPlugin());
+    channel.setMethodCallHandler(new DeviceInfoPlugin(registrar.activity()));
   }
 
   /** Do not allow direct instantiation. */
-  private DeviceInfoPlugin() {}
+  private DeviceInfoPlugin(Activity activity) { this.activity = activity; }
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {
@@ -39,6 +43,7 @@ public class DeviceInfoPlugin implements MethodCallHandler {
       build.put("board", Build.BOARD);
       build.put("bootloader", Build.BOOTLOADER);
       build.put("brand", Build.BRAND);
+      build.put("secureId", Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID));
       build.put("device", Build.DEVICE);
       build.put("display", Build.DISPLAY);
       build.put("fingerprint", Build.FINGERPRINT);

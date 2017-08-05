@@ -44,6 +44,7 @@ class AndroidDeviceInfo {
     this.bootloader,
     this.brand,
     this.device,
+    this.secureId,
     this.display,
     this.fingerprint,
     this.hardware,
@@ -76,6 +77,9 @@ class AndroidDeviceInfo {
 
   /// The name of the industrial design.
   final String device;
+
+  // An id used to identify this installation
+  final String secureId;
 
   /// A build ID string meant for displaying to the user.
   final String display;
@@ -124,6 +128,7 @@ class AndroidDeviceInfo {
       bootloader: json['bootloader'],
       brand: json['brand'],
       device: json['device'],
+      secureId: json['secureId'],
       display: json['display'],
       fingerprint: json['fingerprint'],
       hardware: json['hardware'],
